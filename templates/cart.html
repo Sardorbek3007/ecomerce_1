@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <!-- Cart Area Start -->
+  <div class="cart-main-area pt-100px pb-100px">
+    <div class="container">
+        <h3 class="cart-page-title">Your cart items</h3>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <form action="#">
+                    <div class="table-content table-responsive cart-table-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product Name</th>
+                                    <th>Until Price</th>
+                                    <th>Qty</th>
+                                    <th>Subtotal</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cart_item in cart_items %}
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <a href="#"><img class="img-responsive ml-3" src="{{cart_item.product.image.url}}" alt="" /></a>
+                                    </td>
+                                    <td class="product-name"><a href="#">{{cart_item.product.name}}</a></td>
+                                    <td class="product-price-cart"><span class="amount">${{cart_item.product.price}}</span></td>
+                                    <td class="product-quantity">
+                               
+                                        <div class="d-flex justify-content-center align-items-center" style="margin: auto;">
+                                            <button style="font-size: 30px;"><a href="{% url 'cart_sub' cart_item.product.id %}">-</a></button>
+                                            <input type="text" style="width: 50px;" value="{{cart_item.quantity}}"  />
+                                            <button style="font-size: 20px;"><a href="{% url 'cart_add' cart_item.product.id %}">+</a></button>
+                                        </div>
+                                   
+            
+                                    </td>
+                                    <td class="product-subtotal">${{cart_item.get_total}}</td>
+                                    <td class="product-remove">
+                                        <a href="{% url 'cart_remove' cart_item.product.id %}"><i class="icon-close"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="cart-shiping-update-wrapper">
+                                <div class="cart-shiping-update">
+                                    <a href="{% url 'store'%}">Continue Shopping</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 mt-md-30px">
+                        <div class="grand-totall">
+                            <div class="title-wrap">
+                                <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
+                                <br> <br>
+                
+                            <h4 class="grand-totall-title">Grand Total <span>{{ total }}</span></h4>
+                            <a href="#">Proceed to Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cart Area End -->
+
+{% endblock %}
